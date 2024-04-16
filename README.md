@@ -33,5 +33,5 @@ docker run -dp 8888:8888 george135/subsettools_arm64:latest start-notebook.sh --
 git clone https://github.com/hydroframe/parflow_short_course_updated.git
 ```
  11. Navigate to the `gridding` folder and click on the `box_domain_setup_full.ipynb` notebook.
- 12. Make sure the notebook runs successfully without errors.
+ 12. Make sure the notebook runs successfully without errors. ![alt text](https://github.com/hydroframe/parflow_short_course_updated/blob/main/Docker4.png)
  13. Congratulations, you're all setup!
