@@ -3,7 +3,7 @@
 **Note:** *The Docker image might take a while to download, so make sure you do these steps ahead of the workshop.*
 
   1.  Follow the instructions [here](https://hydroframesubsettools.readthedocs.io/en/latest/getting_started.html#creating-a-hydrogen-hydroframe-hydrodata-account-and-registering-a-pin) to create a Hydrogen account.
-  2.	Go to [Docker](https://www.docker.com/products/docker-desktop/) and download Docker Desktop. Make sure you download the correct version based on your computer’s operating system and architecture. Follow the instructions to install Docker Desktop. ![alt text](https://github.com/hydroframe/parflow_short_course_updated/blob/main/Docker.png)
+  2.	Make sure you have the latest version of Docker Desktop. Go to [Docker](https://www.docker.com/products/docker-desktop/) and download Docker Desktop. Make sure you download the correct version based on your computer’s operating system and architecture. Follow the instructions to install Docker Desktop. ![alt text](https://github.com/hydroframe/parflow_short_course_updated/blob/main/Docker.png)
   3.	Launch Docker Desktop. The application should be running while you do the next steps. (You might need to create a Docker account and sign in if you don’t already have one.)
   4.	Start a new terminal session (outside Docker) to type the commands in the next two steps:
   5.	Pull the parflow/subsettools image from DockerHub. Choose the correct version based on your computer’s architecture.
