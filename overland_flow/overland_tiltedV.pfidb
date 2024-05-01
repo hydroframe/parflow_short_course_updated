@@ -1,4 +1,4 @@
-151
+153
 21
 BCPressure.PatchNames
 47
@@ -539,6 +539,14 @@ True
 Solver.OverlandKinematic.Epsilon
 5
 1e-05
+20
+Solver.PrintMannings
+4
+True
+18
+Solver.PrintSlopes
+4
+True
 19
 Solver.PrintSubsurf
 5
