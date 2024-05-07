@@ -1,4 +1,4 @@
-156
+158
 21
 BCPressure.PatchNames
 47
@@ -515,6 +515,10 @@ True
 Solver.PrintLSMSink
 5
 False
+20
+Solver.PrintMannings
+4
+True
 16
 Solver.PrintMask
 4
@@ -525,6 +529,10 @@ Solver.PrintPressure
 True
 22
 Solver.PrintSaturation
+4
+True
+18
+Solver.PrintSlopes
 4
 True
 27
