@@ -213,11 +213,11 @@ def plot_streamflow(run_directory, grid_cell=None):
     plt.title(f"Streamflow at grid cell {grid_cell}")
     plt.show()
 
-def plot_water_balance(run_directory):
+def plot_water_balance(run_directory, run_name):
     """Function to plot total subsurface storage over time based on a ParFlow run"""
     
     # Load the run from the file, this is the same as the run defined above
-    run = Run.from_definition(os.path.join(run_directory, "domain_example.pfidb"))   
+    run = Run.from_definition(os.path.join(run_directory, f"{run_name}.pfidb"))   
 
     data = run.data_accessor # get the data accessor, this makes it easier to access the data from the run
     nt = len(data.times)  # get the number of time steps
