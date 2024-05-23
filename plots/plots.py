@@ -30,7 +30,12 @@ def plot_domain(run_directory, variable, timestep=0):
     print(f"dx = {dx}, dy = {dy}, dz = {dz}")
 
     # Load the data
-    data = read_pfb(get_absolute_path(f"domain_example.out.{variable}.{str(timestep).zfill(5)}.pfb")).reshape(nz, nx)
+    if variable == "porosity":
+        data = read_pfb(get_absolute_path(f"domain_example.out.{variable}.pfb")).reshape(nz, nx)
+    elif variable == "mannings":
+        data = read_pfb(get_absolute_path(f"domain_example.out.mannings.pfb"))[0, :, :]
+    else:
+        data = read_pfb(get_absolute_path(f"domain_example.out.{variable}.{str(timestep).zfill(5)}.pfb")).reshape(nz, nx)
     
     # Set negative saturation values to NaN
     if variable == "satur":
@@ -38,6 +43,7 @@ def plot_domain(run_directory, variable, timestep=0):
     
     # Set up x and z to match the shape of the ParFlow grid
     x = np.arange(0.0,(nx+1)*dx,dx)
+    y = np.arange(0.0,(ny+1)*dy,dy)
     z = np.zeros(nz+1)
     z[1:] = np.cumsum(dz)
 
@@ -53,11 +59,80 @@ def plot_domain(run_directory, variable, timestep=0):
     elif variable == "press":
         label = "Pressure Head [m]"
         title = "Pressure Head"
+    elif variable == "porosity":
+        label = "Porosity"
+        title = "Porosity"
+    elif variable == "mannings":
+        label = "Mannings"
+        title = "Mannings"
 
     # Use pcolormesh to plot the data with the x and z coordinates with lines 
     # for the grid mesh from the ParFlow run grid
     fig, ax = plt.subplots()
-    im = ax.pcolormesh(x, z, data, vmin=vmin, vmax=vmax, cmap='plasma_r')
+
+    if variable == "mannings":
+        im = ax.pcolormesh(x, y, data, vmin=vmin, vmax=vmax, cmap='plasma_r')
+    else:
+        im = ax.pcolormesh(x, z, data, vmin=vmin, vmax=vmax, cmap='plasma_r')
+    plt.colorbar(im, ax=ax, label=label)
+    
+    # Include mesh lines
+    if variable == "mannings":
+        ax.hlines(y,x[0],x[-1],colors='white',linewidth=0.5)
+        ax.vlines(x,y[0],y[-1],colors='white',linewidth=0.5)
+    else:
+        ax.hlines(z,x[0],x[-1],colors='white',linewidth=0.5)
+        ax.vlines(x,z[0],z[-1],colors='white',linewidth=0.5)
+    
+    ax.set_xlabel('x [m]')
+    if variable == "mannings":
+        ax.set_ylabel('y [m]')
+    else:
+        ax.set_ylabel('z [m]')
+    if variable in ["porosity", "mannings"]:
+        ax.set_title(f"{title}")
+    else:
+        ax.set_title(f"{title} at t={timestep}")
+    plt.show()
+
+
+def plot_domain_mannings(run_directory):
+    """Function to plot output from a ParFlow run: Mannings"""
+
+    # Load the run from the file, this is the same as the run defined above
+    run = Run.from_definition(os.path.join(run_directory, "domain_example.pfidb"))   
+
+    data = run.data_accessor # get the data accessor, this makes it easier to access the data from the run
+    nt = len(data.times)  # get the number of time steps
+    nx = data.shape[2]    # get the number of cells in the x direction
+    ny = data.shape[1]    # get the number of cells in the y direction
+    nz = data.shape[0]    # get the number of cells in the z direction
+    dx = data.dx          # get the cell size in the x direction
+    dy = data.dy          # get the cell size in the y direction
+    dz = data.dz          # get the cell size in the z direction, this is a 1D array of size nz
+
+    # Print a summary of the run data
+    print(f"nx = {nx}, ny = {ny}, nz = {nz}, nt = {nt}")
+    print(f"dx = {dx}, dy = {dy}, dz = {dz}")
+
+    # Load the data
+    data = read_pfb(get_absolute_path(f"domain_example.out.mannings.pfb"))[0, :, :]
+    
+    # Set up x and z to match the shape of the ParFlow grid
+    x = np.arange(0.0,(nx+1)*dx,dx)
+    y = np.arange(0.0,(ny+1)*dy,dy)
+    z = np.zeros(nz+1)
+    z[1:] = np.cumsum(dz)
+
+    # Get limits for plotting
+    vmin = np.nanmin(data)
+    vmax = np.nanmax(data)
+    print(f"vmin: {vmin}, vmax: {vmax}")
+
+    # Use pcolormesh to plot the data with the x and z coordinates with lines 
+    # for the grid mesh from the ParFlow run grid
+    fig, ax = plt.subplots()
+    im = ax.pcolormesh(x, y, data, vmin=vmin, vmax=vmax, cmap='plasma_r')
     plt.colorbar(im, ax=ax, label=label)
     
     # Include mesh lines
@@ -65,9 +140,10 @@ def plot_domain(run_directory, variable, timestep=0):
     ax.vlines(x,z[0],z[-1],colors='white',linewidth=0.5)
     
     ax.set_xlabel('x [m]')
-    ax.set_ylabel('z [m]')
-    ax.set_title(f"{title} at t={timestep}")
+    ax.set_ylabel('y [m]')
+    ax.set_title(f"{title}")
     plt.show()
+
 
 def plot_domain_overland(run_directory, variable, timestep=0):
     """Function to plot output from a ParFlow run: Overland Flow module"""
@@ -129,7 +205,7 @@ def plot_domain_overland(run_directory, variable, timestep=0):
     ax.set_title(f"{title} at t={timestep}")
     plt.show()
     
-def plot_subsurface_storage(run_directory):
+def plot_subsurface_storage(run_directory, subset_slice=None):
     """Function to plot total subsurface storage over time based on a ParFlow run"""
     
     # Load the run from the file, this is the same as the run defined above
@@ -142,21 +218,31 @@ def plot_subsurface_storage(run_directory):
     nz = data.shape[0]    # get the number of cells in the z direction
     dx = data.dx          # get the cell size in the x direction
     dy = data.dy          # get the cell size in the y direction
-    dz = data.dz          # get the cell size in the z direction, this is a 1D array of size nz
-    mask = data.mask
-    porosity = data.computed_porosity
-    specific_storage = data.specific_storage
+    dz = data.dz          # get the cell size in the z direction, this is a 1D array of size n
 
+    if subset_slice is None:
+        subset_array = (slice(0, nz), slice(0, ny), slice(0, nx))
+    else: 
+        subset_array = (slice(subset_slice[0], subset_slice[1]),
+                        slice(subset_slice[2], subset_slice[3]),
+                        slice(subset_slice[4], subset_slice[5]))
+        dz = dz[subset_slice[0]:subset_slice[1]]
+
+    mask = data.mask[subset_array]
+    porosity = data.computed_porosity[subset_array]
+    specific_storage = data.specific_storage[subset_array]
+    
     # Initialize empty array
     subsurface_storage = np.zeros(nt)
     
     press_files = sorted(glob(f'{run_directory}/domain_example.out.press*.pfb'))
     satur_files = sorted(glob(f'{run_directory}/domain_example.out.satur*.pfb'))
-
+        
     # Iteratively calculate overland flow for whole domain
-    for hour in range(0, nt):        
-        pressure = pf.read_pfb(press_files[hour])
-        saturation = pf.read_pfb(satur_files[hour])
+    for hour in range(0, nt): 
+
+        pressure = pf.read_pfb(press_files[hour])[subset_array]
+        saturation = pf.read_pfb(satur_files[hour])[subset_array]
             
         subsurface_storage[hour] = np.sum(hydro.calculate_subsurface_storage(porosity, pressure, saturation, specific_storage, dx, dy, dz, mask=mask),
         axis=(0, 1, 2))
