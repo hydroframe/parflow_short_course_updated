@@ -10,11 +10,11 @@
 **NOTE:** *If your Docker is running out of space, you might need to use [docker system prune](https://docs.docker.com/engine/reference/commandline/system_prune/) with the appropriate options to clear out old containers and make space for the new one.*
 - For the x86_64/amd64 (Intel Chip for Mac or Windows) architecture:
 ```bash
-docker pull george135/subsettools_amd64
+docker pull george135/subsettools_amd64-june2025
 ```
 - For the arm64 (M1/M2 chip for Mac) architecture:
 ```bash
-docker pull george135/subsettools_arm64
+docker pull george135/subsettools_arm64-june2025
 ```
   6. Once the image has finished downloading, you can run the container with:
 - For the x86_64/amd64 architecture:
