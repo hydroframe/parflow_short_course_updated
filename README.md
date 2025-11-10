@@ -19,11 +19,11 @@ docker pull george135/subsettools_arm64
   6. Once the image has finished downloading, you can run the container with:
 - For the x86_64/amd64 architecture:
 ```bash
-docker run -dp 8888:8888 george135/subsettools_amd64:latest start-notebook.sh --NotebookApp.token=''
+docker run -dp 8888:8888 george135/subsettools_amd64-june2025:latest start-notebook.sh --NotebookApp.token=''
 ```
 - For the arm64 architecture:
 ```bash
-docker run -dp 8888:8888 george135/subsettools_arm64:latest start-notebook.sh --NotebookApp.token=''
+docker run -dp 8888:8888 george135/subsettools_arm64-june2025:latest start-notebook.sh --NotebookApp.token=''
 ```
   7. Use a browser to navigate to your [JupyterLab container](http://localhost:8888/lab?) or use the link that will appear next to your container on the Docker Desktop application: ![alt text](https://github.com/hydroframe/parflow_short_course_updated/blob/main/Docker2.png)
   8. You should see a JupyterLab environment like this: ![alt text](https://github.com/hydroframe/parflow_short_course_updated/blob/main/Docker3.png)
