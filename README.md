@@ -1,4 +1,20 @@
-# Instructions for getting setup with Docker for the ParFlow short course:
+# Setting up the workspace for the ParFlow short course
+
+The recommended option is CodeSpaces. This will be the easiest to setup and follow along during the workshop. Docker should only be used as a fallback.
+
+## Instructions for setting up the codespaces for the ParFlow short course:
+
+**Note:** *The Codespace image might take a while to build, so make sure you do these steps ahead of the workshop.*
+
+  1.  Follow the [GitHub documentation](https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github) to create a personal GitHub account.
+  2.  Browse to the [course repo](https://github.com/hydroframe/parflow_short_course_updated).
+  3.  Click on the "Code" green button and then select "Create codespace on main". The codespace will launch in a new tab. This step can take up to 15-20 minutes when the codespace is building for the first time. When you subsequently launch the codespace, it will start up much faster. ![alt text](https://github.com/hydroframe/parflow_short_course_updated/blob/main/codespace1.png)
+  4. Once the codespace completes building, navigate to the `gridding` folder and click on the `box_domain_setup_full.ipynb` notebook. ![alt text](https://github.com/hydroframe/parflow_short_course_updated/blob/main/codespace2.png)
+  5. Run the notebook. When prompted to select a kernel for the Jupyter notebook, click on "Python Environments" and then select the Virtual Environment. ![alt text](https://github.com/hydroframe/parflow_short_course_updated/blob/main/codespace3.png)
+  6. Make sure the notebook runs successfully without errors. ![alt text](https://github.com/hydroframe/parflow_short_course_updated/blob/main/codespace4.png)
+  7. Congratulations, you're all setup!
+
+## Instructions for setting up Docker for the ParFlow short course:
 
 **Note:** *The Docker image might take a while to download, so make sure you do these steps ahead of the workshop.*
 
