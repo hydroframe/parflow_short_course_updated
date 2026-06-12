@@ -108,3 +108,10 @@ source parflow-env.sh
 ```bash
 pip install pftools
 ```
+
+## Useful Links for Building ParFlow
+
+- The [ParFlow GitHub README](https://github.com/parflow/parflow/blob/master/README.md) is a good place to start if you haven't built ParFlow before.
+- In the same repo, there is a collection of [recipes](https://github.com/parflow/parflow/tree/master/cmake/recipes) for building ParFlow in different HPC systems. Each system has its own quirks, but these recipes can be a useful guide for a range of systems.
+- More installation guides and tips can be found in the [ParFlow wiki](https://github.com/parflow/parflow/wiki)
+- The [ParFlow Google Group](https://groups.google.com/g/parflow) is a good place to ask questions.
